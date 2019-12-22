@@ -19,11 +19,8 @@
   -->
 
 
-
-
-
 <assembly>
-    <id>dist</id>
+    <id>dist-beta.8</id>
     <formats>
         <format>zip</format>
     </formats>
@@ -39,12 +36,13 @@
         </fileSet>
         <fileSet>
             <directory>
-                ${project.parent.basedir}/conf
+                ${project.parent.basedir}/config
             </directory>
-            <outputDirectory>conf</outputDirectory>
+            <outputDirectory>config</outputDirectory>
             <includes>
-                <include>application.conf.example</include>
-                <include>log4j.properties</include>
+                <include>application.yml.example</include>
+                <include>datasource_driver.yml.example</include>
+                <include>logback.xml</include>
             </includes>
         </fileSet>
         <fileSet>
@@ -52,12 +50,30 @@
                 ${project.parent.basedir}/bin
             </directory>
             <outputDirectory>bin</outputDirectory>
+            <excludes>
+                <exclude>upgrade/**</exclude>
+                <exclude>upgrade.*</exclude>
+                <exclude>upgrade-*</exclude>
+            </excludes>
         </fileSet>
         <fileSet>
             <directory>
-                ${project.parent.basedir}/tempFiles
+                ${project.parent.basedir}/userfiles
             </directory>
-            <outputDirectory>tempFiles</outputDirectory>
+            <outputDirectory>userfiles</outputDirectory>
+            <excludes>
+                <exclude>*/**</exclude>
+            </excludes>
+        </fileSet>
+        <fileSet>
+            <directory>
+                ${project.parent.basedir}/logs
+            </directory>
+            <outputDirectory>logs</outputDirectory>
+            <includes>
+                <include>sys</include>
+                <include>user</include>
+            </includes>
         </fileSet>
         <fileSet>
             <directory>

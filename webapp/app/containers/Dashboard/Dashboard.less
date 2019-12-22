@@ -1,4 +1,4 @@
-@import "../../assets/less/variable";
+@import "~assets/less/variable";
 
 .unit {
   height: 120px;
@@ -76,7 +76,9 @@
   height: 100%;
   display: flex;
   flex-direction: column;
+  box-shadow: @block-box-shadow;
   transition: all 350ms ease;
+  position: relative;
 
   .header {
     width: 100%;
@@ -86,31 +88,28 @@
     .title {
       min-width: 0;
       height: 40px;
-      padding: 0 10px;
+      padding: 0 2px;
       line-height: 40px;
       display: flex;
       flex-direction: row;
+      align-items: center;
       cursor: move;
       flex: 1 1 auto;
 
       h4 {
         .ellipsis;
         cursor: default;
-      }
-
-      .control, .desc {
-        font-weight: normal;
-        cursor: pointer;
-        line-height: 40px;
-      }
-
-      .control {
-        font-size: 16px;
-        margin-right: 8px;
-      }
-
-      .desc {
         margin-left: 8px;
+      }
+
+      .toggle {
+        font-size: 16px;
+        margin-left: 8px;
+        cursor: pointer;
+      }
+
+      .error {
+        color: @error-color;
       }
     }
 
@@ -139,6 +138,16 @@
       .tools {
         opacity: 1;
       }
+    }
+  }
+
+  .trigger {
+    position: absolute;
+    top: 28px;
+    left: 10px;
+    i{
+      font-size: 14px;
+      color: @rich-text;
     }
   }
 
@@ -193,6 +202,7 @@
     &.show {
       display: block;
       background-color: fade(@black, 50);
+      cursor: pointer;
     }
 
     .form {
@@ -200,6 +210,7 @@
       background-color: @white;
       border-top: 1px solid @border-color-base;
       overflow-y: auto;
+      cursor: default;
 
       &.show {
         transform: translate(0, 0);
@@ -245,173 +256,21 @@
 
   .block {
     flex: 1;
-    overflow-y: auto;
+    min-height: 0;
+    padding: 16px;
     display: flex;
     flex-direction: column;
-
-    .chartBlock {
-      flex: 1;
-      overflow-x: hidden;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .tableBlock {
-      padding: 0 16px;
-      flex: 1;
-
-      .selectedRow {
-        td {
-          background-color: @primary-color;
-          color: @white;
-        }
-      }
-    }
   }
 }
 
-.descPanel {
-  max-width: 256px;
+.widgetInfoContent {
+  max-width: 480px;
+  max-height: 360px;
+  overflow-y: auto;
 }
 
 .gridBottom {
   height: 100px;
-}
-
-.filters {
-  width: 100%;
-  height: 100%;
-  padding-bottom: 40px;
-  position: relative;
-
-  .buttons {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-
-    button {
-      margin-left: 8px;
-    }
-  }
-}
-
-.filterForm {
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-
-  .empty {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-  }
-
-  .filterBlock {
-    flex-shrink: 0;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
-
-  .filterRel {
-    width: 110px;
-    margin: 0 5px;
-    flex-shrink: 0;
-    position: relative;
-
-    &:after{
-      width: 10px;
-      height: 0;
-      border-top: 1px solid @primary-color;
-      position: absolute;
-      top: 50%;
-      right: -10px;
-      content: '';
-    }
-  }
-
-  .filterList {
-    padding-left: 5px;
-    margin-left: 5px;
-    border-left: 1px solid @primary-color;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .filterItem {
-    padding: 4px 0;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    position: relative;
-
-    & > *:not(.filterBlock) {
-      margin: 0 4px;
-    }
-
-    &:before {
-      width: 10px;
-      height: 0;
-      border-top: 1px solid @primary-color;
-      position: absolute;
-      top: 50%;
-      left: -5px;
-      content: '';
-    }
-
-    &.root:before {
-      width: 0;
-      display: none;
-    }
-
-    &.noPadding {
-      padding: 0;
-    }
-
-    &:first-child,
-    &:last-child {
-      &:after {
-        width: 3px;
-        background-color: @white;
-        position: absolute;
-        left: -7px;
-        content: '';
-      }
-    }
-
-    &:first-child {
-      &:after {
-        height: 50%;
-        top: 0;
-      }
-    }
-
-    &:last-child {
-      &:after {
-        height: 50%;
-        bottom: -1px;
-      }
-    }
-  }
-
-  .filterFormItem {
-    margin-bottom: 0;
-
-    .inputNumber {
-      width: 100%;
-    }
-  }
-
-  .filterFormKey {
-    min-width: 100px;
-  }
-
-  .filterFormOperator {
-    min-width: 60px;
-  }
 }
 
 .dimension {
@@ -430,7 +289,25 @@
 }
 
 .shareTitle {
+  padding: 0 50px;
   text-align: center;
+}
+
+.shareDownloadListToggle {
+  width: 50px;
+  height: 32px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  i {
+    font-size: 24px;
+    cursor: pointer;
+  }
 }
 
 .shareContentEmpty {
@@ -454,49 +331,6 @@
 
   .buttonRow {
     text-align: right;
-  }
-}
-
-.scorecard {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 0 16px 40px;
-
-  .scorecardContainer {
-    max-width: 100%;
-
-    .scorecardTitle {
-      padding: 8px 0 0;
-      display: block;
-
-      .ellipsis;
-    }
-
-    .scorecardContent {
-      padding: 8px 0;
-      color: @light-text-color;
-      display: block;
-
-      .ellipsis;
-    }
-  }
-}
-
-.textEditorContainer {
-  width: 100%;
-  height: 100%;
-  padding-bottom: 56px;
-
-  .editor {
-    width: 100%;
-    height: 100%;
-  }
-
-  .textEditor {
-    height: 100%;
   }
 }
 
@@ -535,61 +369,290 @@
   margin: -10px 0 -10px;
 }
 
-.popHide, .popShow {
-  background-color: @white;
-  position: absolute;
-  width: 8%;
-  top: 29px;
-  z-index: 1;
-  border: 1px solid transparent;
-  box-shadow: rgba(0,0,0,0.2) 0 2px 8px;
-}
+// .popHide, .popShow {
+//   background-color: @white;
+//   position: absolute;
+//   width: 8%;
+//   top: 29px;
+//   z-index: 1;
+//   border: 1px solid transparent;
+//   box-shadow: rgba(0,0,0,0.2) 0 2px 8px;
+// }
 
-.popHide {
-  display: none;
-}
+// .popHide {
+//   display: none;
+// }
 
-.popShow {
-  display: block;
-}
+// .popShow {
+//   display: block;
+// }
 
-.selectBtn, .selectBtn:hover {
-  color:  @rich-text !important;
-}
+// .selectBtn, .selectBtn:hover {
+//   color:  @rich-text !important;
+// }
 
-.selectItem {
-  padding: 4px;
+// .selectItem {
+//   padding: 4px;
+//   cursor: pointer;
+//   text-align: center;
+
+//   &:hover {
+//     color: @blue;
+//   }
+// }
+
+// .selectIcon {
+//   font-size: 17px;
+// }
+
+// .size {
+//   width: 78px !important;
+// }
+
+.more {
   cursor: pointer;
+  font-weight: 900;
+  -moz-transform:rotate(-90deg);
+  -webkit-transform:rotate(-90deg);
+  filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+  &:before {
+    padding: 0 8px;
+  }
+}
+
+.more:before, .swap:before, .itemAction:before {
+  -moz-transform:rotate(-90deg);
+  -webkit-transform:rotate(-90deg);
+  filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+}
+
+.portalTreeSearch {
+  overflow-x: auto;
   text-align: center;
+  ul {
+    max-height: 410px;
+    overflow-y: auto;
+    li {
+      cursor: pointer;
+      line-height: 26px;
+    }
+  }
+}
+
+.menu > li {
+  cursor: pointer;
+  line-height: 26px;
+}
+
+.portal {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .portalHeader {
+    flex-shrink: 0;
+    font-size: 12px;
+  }
+
+  .portalBody {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+
+    .portalTree {
+      flex-shrink: 0;
+      // width: 190px;
+      margin-bottom: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+
+      .loadingTreeMsg {
+        padding-left: 16px;
+      }
+
+      .portalRow {
+        flex-shrink: 0;
+        // display: flex;
+        // flex-direction: row;
+        align-items: center;
+        padding: 16px;
+
+        .search, .plus {
+          cursor: pointer;
+          margin-right: 8px;
+        }
+        .search:before, .plus:before {
+          padding: 0 8px;
+        }
+      }
+
+      .portalAction {
+        float: right;
+      }
+
+      .portalTreeNode {
+        flex: 1;
+        overflow-y: auto;
+        border-top: 1px solid #d9d9d9;
+        padding-left: 8px;
+        margin-bottom: 34px;
+      }
+    }
+
+    .gridClass {
+      flex: 1;
+      min-width: 0;
+      min-height: 0;
+      border-left: 1px solid #d9d9d9;
+    }
+  }
+}
+
+.noDashboard {
+  top: 32%;
+  left: 50%;
+  position: fixed;
+  img {
+    cursor: pointer;
+  }
+  p {
+    text-align: center;
+    color: rgba(10,18,32,.46);
+  }
+}
+
+.portalTreeItem {
+  .dashboardTitle {
+    display: inline-block;
+    margin-bottom: -4px;
+    font-weight: 400;
+    font-size: 14px;
+    font-family: 'PingFang SC','Helvetica Neue',Helvetica,STHeitiSC-Light,WOL_SB,'Segoe UI Semibold','Segoe UI',Tahoma,Helvetica,sans-serif;
+    .ellipsis;
+  }
+
+  .itemAction {
+    display: none;
+  }
 
   &:hover {
-    color: @blue;
+    .itemAction {
+      display: inline-block !important;
+      cursor: pointer;
+      font-weight: 900;
+      margin-bottom: 1px;
+    }
+  }
+
+  .itemName {
+    margin-left: 8px;
+    font-weight: 400;
+    font-size: 14px;
+    font-family: 'PingFang SC','Helvetica Neue',Helvetica,STHeitiSC-Light,WOL_SB,'Segoe UI Semibold','Segoe UI',Tahoma,Helvetica,sans-serif;
   }
 }
 
-.selectIcon {
-  font-size: 17px;
+.dataDrillPanel {
+  position: absolute;
+  color: rgba(0,0,0,.54);
+  background: #fff;
+  box-shadow: 0 0 6px 0 rgba(0,0,0,.1), 0 10px 12px 0 rgba(170,182,206,.36);
 }
-
-.searchAdmin, .addCol {
-  padding: 0 4px;
-  text-align: right;
-}
-
-@media (max-width: 768px) {
-  .searchAdmin {
-    margin-bottom: 8px;
+.dataDrillHistory {
+  position: absolute;
+  color: rgba(0,0,0,.4);
+  left: 22px;
+  bottom: 8px;
+  span {
+    cursor: pointer;
+    &:hover {
+      color: @rich-text;
+    }
   }
 }
 
-.searchUser {
-  float: right;
+.drillPathSetting {
+  margin: 16px 0 0 0;
+  .drillStyle {
+    margin-bottom:16px;
+    .label  {
+      margin-right: 24px;
+    }
+  }
+  .path {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    .pathNodeWrap{
+      .pathNode{
+        width: 240px;
+        display: flex;
+        .pathBox {
+          width: 140px;
+          padding: 4px 8px 0 8px;
+          flex: 0 0 auto;
+          border: 1px solid #d9d9d9;
+          border-radius: 4px;
+          .delete{
+            height: 8px;
+            i {
+              display: none;
+            }
+          }
+          .title{
+            text-align: center;
+            font-size: 14px;
+            margin-bottom: 8px;
+          }
+          &:hover{
+            i {
+              padding: 4px 0px;
+              text-align: right;
+              display: block;
+              cursor: pointer;
+            }
+          }
+          .errorMessage {
+            margin: 0 0 4px 4px;
+            font-weight: 500;
+            color: red;
+          }
+        }
+
+        .relation{
+          width: 60px;
+          margin-left: 20px;
+          align-self: center;
+        }
+      }
+    }
+    .add{
+      align-self: center;
+      i {
+        font-size: 14px;
+      }
+    }
+  }
+  .footer{
+    text-align: right;
+    button {
+      margin-left: 20px;
+    }
+  }
 }
 
-.searchInputAdmin {
-  margin-right: 10px;
+.reportMode {
+  display: flex;
+  overflow: auto;
+  flex: 1;
+  .authSizeTag {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background-color: #fff;
+  }
 }
 
-.size {
-  width: 78px !important;
-}

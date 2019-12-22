@@ -20,5 +20,6 @@
 
 module.exports = {
   'primary-color': '#1B98E0',
-  'font-size-base': '14px'
+  'table-padding-vertical': '10px',
+  'table-padding-horizontal': '8px'
 }
